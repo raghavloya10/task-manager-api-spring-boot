@@ -5,45 +5,54 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import io.rl.tm_api.dao.UserDAO;
 import io.rl.tm_api.entity.User;
+import io.rl.tm_api.jpa.UserRepository;
 
 @Service
 public class UserService {
+
+    @Autowired
+    UserRepository userRepository;
     
     @Autowired
-    UserDAO userDAO;
+    private PasswordEncoder passwordEncoder;
 
     @Transactional
     public User fetchMyDetails() {
-        return userDAO.fetchMyDetails();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.findByUsername(username).get();
     }
     
     @Transactional
     public User fetchUser(int id) {
-    	return userDAO.fetchUser(id);
+    	return userRepository.findById(id);
     }
 
     @Transactional
     public User addUser(User user) {
-        return userDAO.save(user);
+        user.setId(0);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        // System.out.println(">>>"+user.getPassword());
+        return userRepository.save(user);
     }
 
     @Transactional
-    public void deleteUser(int id) {
-        userDAO.deleteUser(id);
+    public User deleteUser(int id) {
+        return userRepository.deleteById(id);
     }
 
     @Transactional
     public List<User> fetchAllUsers() {
-        return userDAO.fetchAllUsers();
+        return userRepository.findAll();
     }
 
     @Transactional
     public User updateUser(User user) {
-        return userDAO.save(user);
+        return userRepository.save(user);
     }
 
 }
