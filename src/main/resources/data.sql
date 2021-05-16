@@ -1,0 +1,2 @@
+INSERT INTO task_manager_api.users(username, password, first_name, last_name, roles) 
+VALUES("admin", "$2a$10$ByZwAlpn.WAm5j6S9QBYHeEp8NLqwvBKDty.QEAyDM1hWVLuq1vKK", "Mr. Admin", "Singh", "ROLE_ADMIN");
