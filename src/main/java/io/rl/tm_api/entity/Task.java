@@ -10,25 +10,53 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 @Entity
-@Getter @Setter @ToString @AllArgsConstructor @RequiredArgsConstructor
 @Table(name = "tasks")
 public class Task {
 
 	@Column(name = "id")
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	@Column
 	private String title;
 	
+	@Column
+	private Boolean completed=false;
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Boolean getCompleted() {
+		return completed;
+	}
+
+	public void setCompleted(Boolean completed) {
+		this.completed = completed;
+	}
+
 	@ManyToOne(cascade = {
 			CascadeType.DETACH, CascadeType.MERGE, 
 			CascadeType.PERSIST, CascadeType.REFRESH
@@ -36,8 +64,22 @@ public class Task {
 	@JoinColumn(name = "user_id")
 	private User user;
 	
-	@Column
-	private Boolean completed=false;
+	public Task() {
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public String toString() {
+		return "Task [completed=" + completed + ", title=" + title + ", user=" + user + "]";
+	}
+
+	public Task(String title, Boolean completed, User user) {
+		this.title = title;
+		this.completed = completed;
+		this.user = user;
+	}
+
+
 
 }
 

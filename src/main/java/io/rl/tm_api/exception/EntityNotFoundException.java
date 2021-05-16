@@ -2,7 +2,12 @@ package io.rl.tm_api.exception;
 
 public class EntityNotFoundException extends RuntimeException {
     
-    public EntityNotFoundException() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public EntityNotFoundException() {
 	}
 
 	public EntityNotFoundException(String message) {

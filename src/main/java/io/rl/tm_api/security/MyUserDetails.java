@@ -13,6 +13,8 @@ import io.rl.tm_api.entity.User;
 
 public class MyUserDetails implements UserDetails {
 	
+	private static final long serialVersionUID = 1L;
+	
 	String username;
 	String password;
 	private boolean active;
